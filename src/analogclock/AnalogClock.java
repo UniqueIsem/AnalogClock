@@ -25,7 +25,7 @@ public class AnalogClock extends JFrame implements Runnable {
             //gBackground.setClip(0, 0, getWidth(), getHeight());
             gBackground.setColor(Color.black);
             gBackground.fillOval((getWidth() - 400) / 2, (getHeight() - 400) / 2, 400, 400);
-            gBackground.setColor(Color.white);
+            gBackground.setColor(Color.red);
             gBackground.drawOval((getWidth() - 400) / 2, (getHeight() - 400) / 2, 400, 400);
             
         }
@@ -70,14 +70,11 @@ public class AnalogClock extends JFrame implements Runnable {
         setResizable(false);
         setSize(500, 500);
         setLocationRelativeTo(null);
+        show();
     }
 
     public static void main(String[] args) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new AnalogClock().setVisible(true);
-            }
-        });
+        new AnalogClock();
     }
 
     @Override
