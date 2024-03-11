@@ -10,6 +10,7 @@ public class FibonacciClock extends JFrame implements Runnable {
     private Image offScreenImage;
     private Image bgImage, spiralImageRed, spiralImageWhite;
     private Graphics offScreenGraphics;
+    private Font myFont = new Font("Monospaced", Font.BOLD, 20);
 
     public FibonacciClock() {
         super("Fibonacci Clock");
@@ -113,38 +114,27 @@ public class FibonacciClock extends JFrame implements Runnable {
         }
 
         g.setColor(Color.red);
+        g.setFont(myFont);
+        float initialStrokeWidth = 4;
         int radiusFibonacci = Math.min(getWidth(), getHeight()) / 4;
         
-        //Top lines for fibonacci clock
-        int arcSpacing = 20; // Espacio entre arcos
-        int arcStartAngle = 50; // Ángulo inicial del primer arco
-        int arcEndAngle = 50; // Ángulo final del primer arco
-        int posX = 150;
-        g.drawString("10", centerX , centerY - 150);
-        g.drawString("20", centerX + 50 , centerY - 180);
-        g.drawString("30", centerX + 100, centerY - 200);
-        g.drawArc(centerX - 150, centerY - 160, radiusFibonacci + arcSpacing * 2, radiusFibonacci + arcSpacing * 2, 50, 50);
-        g.drawArc(centerX - 160, centerY - 185 - arcSpacing, radiusFibonacci + 2 * arcSpacing * 2, radiusFibonacci + 2 * arcSpacing * 2, 40, 40);
-        g.drawArc(centerX - 151, centerY - 230 - arcSpacing, radiusFibonacci + 3 * arcSpacing * 2, radiusFibonacci + 3 * arcSpacing * 2, 25, 35);
-        /*for (int i = 0; i < 3; i++) {
-            g.drawArc(centerX - posX, centerY - 170 - i * arcSpacing, radiusFibonacci + i * arcSpacing * 2, radiusFibonacci + i * arcSpacing * 2, arcStartAngle, arcEndAngle);
-            arcSpacing += 20;
-            posX += 50;
-        }*/
+        //Top arcs and numbers for fibonacci clock
+        ((Graphics2D) g).setStroke(new BasicStroke(initialStrokeWidth));
+        int arcSpacing = 20; // Space between arcs
+        g.drawArc(centerX - 150, centerY - 155, radiusFibonacci + arcSpacing * 2, radiusFibonacci + arcSpacing * 2, 30, 50);
+        //g.drawString("10", centerX, centerY - 165);
+        g.drawArc(centerX - 200, centerY - 187 - arcSpacing, radiusFibonacci + 2 * arcSpacing * 3, radiusFibonacci + 2 * arcSpacing * 2, 20, 50);
+        //g.drawString("20", centerX + 50 , centerY - 195);
+        g.drawArc(centerX - 420, centerY - 290 - arcSpacing, radiusFibonacci + 3 * arcSpacing * 6, radiusFibonacci + 3 * arcSpacing * 2, 15, 50);
+        //g.drawString("30", centerX + 115, centerY - 185);
 
         //Bottom lines for fibonacci clock
-        int arcSpacing2 = 20; // Espacio entre arcos
-        int arcStartAngle2 = 30; // Ángulo inicial del primer arco
-        int arcEndAngle2 = -50; // Ángulo final del primer arco
-        int posX2 = -150;
-        for (int i = 0; i < 3; i++) {
-            g.drawArc(centerX + posX2, centerY + 170 - i * arcSpacing2, radiusFibonacci + i * arcSpacing * 2, radiusFibonacci + i * arcSpacing * 2, arcStartAngle2, arcEndAngle2);
-            arcSpacing -= 20;
-            posX -= 50;
-        }
+        g.drawArc(centerX - 104, centerY - 100, radiusFibonacci + arcSpacing * 2, radiusFibonacci + arcSpacing * 2, 180, 50);
+        g.drawArc(centerX - 135, centerY - 70 - arcSpacing, radiusFibonacci + 2 * arcSpacing * 3, radiusFibonacci + 2 * arcSpacing * 2, 185, 50);
+        g.drawArc(centerX - 180, centerY - 20 - arcSpacing, radiusFibonacci + 3 * arcSpacing * 6, radiusFibonacci + 3 * arcSpacing * 2, 190, 50);
+        //g.drawArc(centerX - 130, centerY - 65, radiusFibonacci + arcSpacing * 2, radiusFibonacci + arcSpacing * 2, -80, -80);
 
         double angle;
-        float initialStrokeWidth = 3;
         // Hours
         ((Graphics2D) g).setStroke(new BasicStroke(initialStrokeWidth));
         g.setColor(Color.white);
