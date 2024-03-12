@@ -119,16 +119,15 @@ public class FibonacciClock extends JFrame implements Runnable {
         g.drawArc(centerX - 200, centerY - 187 - arcSpacing, radiusFibonacci + 2 * arcSpacing * 3, radiusFibonacci + 2 * arcSpacing * 2, 25, 50);
         g.drawString("20", centerX + 110 , centerY - 100);
         g.drawArc(centerX - 420, centerY - 290 - arcSpacing, radiusFibonacci + 3 * arcSpacing * 6, radiusFibonacci + 3 * arcSpacing * 2, 15, 50);
-        g.drawString("30", centerX + 135, centerY - 165);
+        g.drawString("30", centerX + 140, centerY - 165);
 
         //Bottom lines for fibonacci clock
         g.drawArc(centerX - 104, centerY - 80, radiusFibonacci + arcSpacing * 2, radiusFibonacci + arcSpacing * 2, 180, 50);
-        g.drawString("40", centerX - 120, centerY + 35);
-        g.drawArc(centerX - 135, centerY - 70 - arcSpacing, radiusFibonacci + 2 * arcSpacing * 3, radiusFibonacci + 3 * arcSpacing * 2, 185, 50);
-        g.drawString("50", centerX - 150, centerY + 80);
-        g.drawArc(centerX - 160, centerY - 20 - arcSpacing, radiusFibonacci + 3 * arcSpacing * 6, radiusFibonacci + 4 * arcSpacing * 2, 185, 50);
-        g.drawString("60", centerX - 190, centerY + 115);
-        
+        g.drawString("40", centerX - 125, centerY + 35);
+        g.drawArc(centerX - 137, centerY - 100 - arcSpacing, radiusFibonacci + 2 * arcSpacing * 3, radiusFibonacci + 3 * arcSpacing * 2, 200, 50);
+        g.drawString("50", centerX - 150, centerY + 95);
+        g.drawArc(centerX - 170, centerY - 45 - arcSpacing, radiusFibonacci + 3 * arcSpacing * 6, radiusFibonacci + 4 * arcSpacing * 2, 200, 50);
+        g.drawString("60", centerX - 175, centerY + 175);
 
         double angle;
         // Hours
