@@ -1,7 +1,9 @@
 package analogclock;
 
 import java.awt.*;
+import java.io.File;
 import java.util.Calendar;
+import javax.sound.sampled.*;
 import javax.swing.*;
 
 public class FibonacciClock extends JFrame implements Runnable {
@@ -11,6 +13,7 @@ public class FibonacciClock extends JFrame implements Runnable {
     private Image bgImage, spiralImageRed, spiralImageWhite;
     private Graphics offScreenGraphics;
     private Font myFont = new Font("Monospaced", Font.BOLD, 22);
+    private Clip clip;
 
     public FibonacciClock() {
         super("Fibonacci Clock");
@@ -20,14 +23,16 @@ public class FibonacciClock extends JFrame implements Runnable {
         setResizable(false);
         String imagePath = "C:\\Users\\isaac\\OneDrive\\Documentos\\NetBeansProjects\\AnalogClock\\src\\images\\background.jpg";
         bgImage = new ImageIcon(imagePath).getImage();
-        String secImgPath = "C:\\Users\\isaac\\OneDrive\\Documentos\\NetBeansProjects\\AnalogClock\\src\\images\\fibonacciSpiralRed.png";
-        spiralImageRed = new ImageIcon(secImgPath).getImage();
+        //String secImgPath = "C:\\Users\\isaac\\OneDrive\\Documentos\\NetBeansProjects\\AnalogClock\\src\\images\\fibonacciSpiralRed.png";
+        //spiralImageRed = new ImageIcon(secImgPath).getImage();
         String minImgPath = "C:\\Users\\isaac\\OneDrive\\Documentos\\NetBeansProjects\\AnalogClock\\src\\images\\fibonacciSpiralWhite.png";
         spiralImageWhite = new ImageIcon(minImgPath).getImage();
-
+        
+        loadTickSound();
+        
         thr = new Thread(this);
         thr.start();
-
+        playTickSound();
         setVisible(true);
     }
 
@@ -45,7 +50,6 @@ public class FibonacciClock extends JFrame implements Runnable {
             offScreenImage = createImage(getWidth(), getHeight());
             offScreenGraphics = offScreenImage.getGraphics();
         }
-
         drawBackground(offScreenGraphics);
         drawClock(offScreenGraphics);
 
@@ -77,8 +81,7 @@ public class FibonacciClock extends JFrame implements Runnable {
         if (hour > 12) {
             hour -= 12;
         }
-        
-        
+
         Graphics2D g2d = (Graphics2D) g.create();
         ((Graphics2D) g2d).setStroke(new BasicStroke(2));
 
@@ -110,19 +113,19 @@ public class FibonacciClock extends JFrame implements Runnable {
         int circleRadius = 5;
         float initialStrokeWidth = 4;
         int radiusFibonacci = Math.min(getWidth(), getHeight()) / 4;
-        
+
         //Top arcs and numbers for fibonacci clock
         ((Graphics2D) g).setStroke(new BasicStroke(initialStrokeWidth));
         int arcSpacing = 20; // Space between arcs
         g.drawArc(centerX - 150, centerY - 155, radiusFibonacci + arcSpacing * 2, radiusFibonacci + arcSpacing * 2, 30, 50);
         g.drawString("10", centerX + 80, centerY - 70);
         g.drawArc(centerX - 200, centerY - 187 - arcSpacing, radiusFibonacci + 2 * arcSpacing * 3, radiusFibonacci + 2 * arcSpacing * 2, 25, 50);
-        g.drawString("20", centerX + 110 , centerY - 100);
+        g.drawString("20", centerX + 110, centerY - 100);
         g.drawArc(centerX - 420, centerY - 290 - arcSpacing, radiusFibonacci + 3 * arcSpacing * 6, radiusFibonacci + 3 * arcSpacing * 2, 15, 50);
         g.drawString("30", centerX + 140, centerY - 165);
 
         //Bottom lines for fibonacci clock
-        g.drawArc(centerX - 104, centerY - 80, radiusFibonacci + arcSpacing * 2, radiusFibonacci + arcSpacing * 2, 180, 50);
+        g.drawArc(centerX - 104, centerY - 100, radiusFibonacci + arcSpacing * 2, radiusFibonacci + arcSpacing * 2, 200, 50);
         g.drawString("40", centerX - 125, centerY + 35);
         g.drawArc(centerX - 137, centerY - 100 - arcSpacing, radiusFibonacci + 2 * arcSpacing * 3, radiusFibonacci + 3 * arcSpacing * 2, 200, 50);
         g.drawString("50", centerX - 150, centerY + 95);
@@ -156,18 +159,29 @@ public class FibonacciClock extends JFrame implements Runnable {
         g.setColor(Color.red);
         angle = Math.toRadians((15 - second - (millisecond / 1000.0)) * 6);
         x = (int) (Math.cos(angle) * radius);
-        y = (int) (Math.sin(angle) * radius); 
+        y = (int) (Math.sin(angle) * radius);
         int startXS = centerX - x / 5; // Oposite position on X
         int startYS = centerY + y / 5; // Oposite position on Y
         g.drawLine(centerX, centerY, centerX + x, centerY - y);
         g.drawLine(centerX, centerY, startXS, startYS);
-        // Rotar la imagen de la manecilla de la hora
-        /*g2d = (Graphics2D) g.create();
-        g2d.rotate(-angle, centerX, centerY);
-        if (spiralImageRed != null) {
-            g2d.drawImage(spiralImage, centerX -305 , centerY - 185, null);
+    }
+    
+     private void loadTickSound() {
+        try {
+            AudioInputStream ais = AudioSystem.getAudioInputStream(new File("src/sounds/tick_sound.wav"));
+            clip = AudioSystem.getClip();
+            clip.open(ais);
+            clip.loop(Clip.LOOP_CONTINUOUSLY);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        g2d.dispose();*/
+    }
+     
+    private void playTickSound() {
+        if (clip != null) {
+            clip.setFramePosition(0);
+            clip.start();
+        }
     }
 
     public static void main(String[] args) {
